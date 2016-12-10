@@ -6,12 +6,14 @@ import {
   browserHistory,
   IndexRoute } from 'react-router';
 import App from './components/home/';
+import Resource from './components/resource'
 import Layout from './components/layout/';
 
 const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={Layout}>
       <IndexRoute component={App}/>
+      <Route path="resource" component={Resource}/>
     </Route>
  </Router>
 )
