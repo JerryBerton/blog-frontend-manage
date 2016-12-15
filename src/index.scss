@@ -1,0 +1,10 @@
+#app {
+  .container {
+    padding: 16px;
+    .container-box {
+      background-color: #fff;
+      padding: 10px;
+      box-shadow:5px 5px rgba(0,0,0,.6);
+    }
+  }
+}
