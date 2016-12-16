@@ -1,5 +1,5 @@
-import User from './user.js';
+import Carsoule from './carsoule.js';
 
 export default {
-  userStore: new User(),
+  carsouleStore: new Carsoule(),
 }

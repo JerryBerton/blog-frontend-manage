@@ -1,9 +1,18 @@
 import React from 'react';
+import { observer } from 'mobx-react';
+
 import './carousel.scss';
+
 import { Card, Button, Icon} from 'antd';
+import CarouseAdd from './add';
+
+@observer(['carsouleStore'])
 class Carousel extends React.Component {
   constructor(props) {
     super(props);
+  }
+  componentDidMount() {
+    this.props.carsouleStore.getList();
   }
   render() {
     return(
@@ -11,7 +20,9 @@ class Carousel extends React.Component {
         <div className="carousel-add-open">
           <Icon type="plus-square-o" />
         </div>
-        <div className="carousel-add" rc-animate={{transitionName: 'zoom'}}>测试</div>
+        <div className="carousel-add">
+          <CarouseAdd/>
+        </div>
         <div className="carousel-list">
           <Card  className="carousel-item" style={{ width: 240 }} bodyStyle={{ padding: 0 }}>
             <div className="custom-image">

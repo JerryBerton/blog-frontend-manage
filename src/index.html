@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>React Webpack Template Title</title>
+  <title>jimberton的CMS管理系统</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -19,10 +19,37 @@
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
+    entrance
   </style>
 </head>
 <body>
-  <div id="app">APPLICATION CONTENT</div>
+  <div id="app">
+    <style>
+      .entrance {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        background: #eee;
+      }
+     .entrance-box {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+        margin-left: -50px;
+        top: 50%;
+        margin-top: -50px;
+      }.entrance-box img {
+        width: 100%;
+      }
+    </style>
+    <div class="entrance">
+      <div class="entrance-box">
+        <img src="http://oi9twvcim.bkt.clouddn.com/gears-icon.svg"/>
+      </div>
+    </div>
+  </div>
 
   <script>__REACT_DEVTOOLS_GLOBAL_HOOK__ = parent.__REACT_DEVTOOLS_GLOBAL_HOOK__</script>
   <script type="text/javascript" src="/assets/app.js"></script>
