@@ -25,13 +25,14 @@ class LayoutComponent extends React.Component {
             <Menu
               theme="dark"
               style={{ width: 240 }}
-              mode="vertical"
+              mode="inline"
               onClick={this.handleClick}
             >
-              <Menu.Item key="resource">
-                <Icon type="mail" />
-                资源管理
-              </Menu.Item>
+              <Menu.SubMenu
+                title={<span><Icon type="mail" />资源管理</span>}>
+                <Menu.Item key="resource/carousel">轮播管理</Menu.Item>
+
+              </Menu.SubMenu>
               <Menu.Item key="category">
                 <Icon type="mail" />
                 分类管理
