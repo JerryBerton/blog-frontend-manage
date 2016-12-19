@@ -64,7 +64,7 @@ function fetchAPI(endpoint, req) {
         message.error(json.message);
         return Promise.reject({ message: json.message })
       }
-      return json.content;
+      return json.result;
     })
 }
 

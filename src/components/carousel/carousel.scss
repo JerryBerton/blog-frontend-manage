@@ -1,15 +1,5 @@
 .layout-carousel {
   position: relative;
-  .carousel-add-open {
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    font-size: 22px;
-    line-height: 32px;
-    text-align: center;
-    cursor: pointer;
-    right: 0;
-  }
   .carousel-add {
     background-color: #fff;
     padding: 10px;
@@ -19,7 +9,7 @@
     margin: 10px 0;
     .carousel-item {
       float: left;
-      height: 200px;
+      max-height: 160px;
       margin: 8px 6px;
       &:hover {
         .carousel-opt {
@@ -34,14 +24,14 @@
         top:0;
         bottom: 0;
         width: 100%;
-        text-align: center;
-        line-height: 200px;
         cursor: pointer;
+        .carousel-opt-btn {
+          position: relative;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+        }
       }
-
-    }
-    .carousel-card {
-      padding: 10px 16px;
     }
   }
 }

@@ -5,10 +5,10 @@ import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute, Redirect} from 'react-router';
 import { Provider } from 'react-redux';
 
-
+import './index.scss';
 import 'antd/dist/antd.css';
 
-import './index.scss';
+
 
 import configureStore from './stores/';
 

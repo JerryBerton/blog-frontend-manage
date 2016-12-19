@@ -2,31 +2,31 @@
 import { combineReducers } from 'redux';
 
 import {
-  CAROUSEL_LIST_REQUERY,
-  CAROUSEL_LIST_SUCCESS,
-  CAROUSEL_LIST_FAILURE,
-  CAROUSEL_EDIT_REQUERY,
-  CAROUSEL_EDIT_SUCCESS,
-  CAROUSEL_EDIT_FAILURE,
-  CAROUSEL_DELETE_REQUERY,
-  CAROUSEL_DELETE_SUCCESS,
-  CAROUSEL_DELETE_FAILURE,
-} from "../actions/carousel.js";
+  ARTICLE_LIST_REQUERY,
+  ARTICLE_LIST_SUCCESS,
+  ARTICLE_LIST_FAILURE,
+  ARTICLE_EDIT_REQUERY,
+  ARTICLE_EDIT_SUCCESS,
+  ARTICLE_EDIT_FAILURE,
+  ARTICLE_DELETE_REQUERY,
+  ARTICLE_DELETE_SUCCESS,
+  ARTICLE_DELETE_FAILURE,
+} from "../actions/article.js";
 
 const list = (state = {}, action) => {
   switch (action.type) {
-    case CAROUSEL_LIST_REQUERY:
+    case ARTICLE_LIST_REQUERY:
       return {
         ...state,
         completed: false,
       }
-    case CAROUSEL_LIST_SUCCESS:
+    case ARTICLE_LIST_SUCCESS:
       return {
         ...state,
         completed: true,
         result: action.resp
       }
-    case CAROUSEL_LIST_FAILURE:
+    case ARTICLE_LIST_FAILURE:
       return {
         ...state,
         completed: false,
@@ -38,18 +38,18 @@ const list = (state = {}, action) => {
 
 const edit = (state = {}, action) => {
   switch (action.type) {
-    case CAROUSEL_EDIT_REQUERY:
+    case ARTICLE_EDIT_REQUERY:
       return {
         ...state,
         completed: false,
       }
-    case CAROUSEL_EDIT_SUCCESS:
+    case ARTICLE_EDIT_SUCCESS:
       return {
         ...state,
         completed: true,
         result: action.resp
       }
-    case CAROUSEL_EDIT_FAILURE:
+    case ARTICLE_EDIT_FAILURE:
       return {
         ...state,
         completed: false,
@@ -61,18 +61,18 @@ const edit = (state = {}, action) => {
 
 const remove = (state = {}, action) => {
   switch (action.type) {
-    case CAROUSEL_DELETE_REQUERY:
+    case ARTICLE_DELETE_REQUERY:
       return {
         ...state,
         completed: false,
       }
-    case CAROUSEL_DELETE_SUCCESS:
+    case ARTICLE_DELETE_SUCCESS:
       return {
         ...state,
         completed: true,
         result: action.resp
       }
-    case CAROUSEL_DELETE_FAILURE:
+    case ARTICLE_DELETE_FAILURE:
       return {
         ...state,
         completed: false,

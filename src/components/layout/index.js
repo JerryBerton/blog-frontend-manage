@@ -1,18 +1,34 @@
 import './layout.scss';
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as categoryAction from '../../actions/category';
+
 import { Menu, Icon,  Breadcrumb, Badge} from 'antd';
 const _height = document.body.clientHeight;
+import Base64 from 'js-base64';
 class LayoutComponent extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
-
   }
-
+  componentWillMount() {
+    this.requestCategory();
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.categoryList.completed &&
+      JSON.stringify(nextProps.categoryList)!== JSON.stringify(this.props.categoryList)) {
+        let categoryList = nextProps.categoryList.result.data;
+        localStorage.setItem("category",
+        Base64.Base64.encode(JSON.stringify(categoryList)));
+      }
+  }
   handleClick(info) {
     this.context.router.push(`/${info.key}`);
   }
-
+  requestCategory() {
+    this.props.categoryAction.fetchList({isPage: 1});
+  }
   render() {
     return (
       <div className="layout">
@@ -31,12 +47,12 @@ class LayoutComponent extends React.Component {
               <Menu.SubMenu
                 title={<span><Icon type="mail" />资源管理</span>}>
                 <Menu.Item key="resource/carousel">轮播管理</Menu.Item>
-
               </Menu.SubMenu>
-              <Menu.Item key="category">
-                <Icon type="mail" />
-                分类管理
-              </Menu.Item>
+              <Menu.SubMenu
+                title={<span><Icon type="mail" />文章管理</span>}>
+                <Menu.Item key="article/list">文章列表</Menu.Item>
+                <Menu.Item key="article/add">编辑文章</Menu.Item>
+              </Menu.SubMenu>
               <Menu.Item key="article">
                 <Icon type="mail" />
                 技术文章
@@ -75,4 +91,15 @@ LayoutComponent.contextTypes = {
   router: React.PropTypes.object
 };
 
-export default LayoutComponent;
+export default connect(
+  (state) => {
+    return {
+      categoryList: state.category.list
+    };
+  },
+  (dispatch) => {
+    return {
+      categoryAction: bindActionCreators(categoryAction, dispatch)
+    };
+  }
+)(LayoutComponent)

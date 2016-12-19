@@ -24,7 +24,7 @@ export function fetchEdit(data) {
   return {
     [FETCH_API]: {
       types: [CAROUSEL_EDIT_REQUERY, CAROUSEL_EDIT_SUCCESS, CAROUSEL_EDIT_FAILURE],
-      endpoint: 'carousel',
+      endpoint: '/authority/carousel',
       method: 'POST',
       sudo: true,
       body: data

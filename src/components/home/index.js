@@ -11,9 +11,7 @@ class AppComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.userStore.addTodo(values);
-      }
+    
     });
   }
   render() {
@@ -40,13 +38,7 @@ class AppComponent extends React.Component {
           </Form.Item>
         </Form>
         <div className="test">
-          <Table
-            dataSource={this.props.userStore.userList || []}
-            columns={[
-            { title: '姓名', dataIndex: 'name', key: 'name' },
-            { title: '年龄', dataIndex: 'age', key: 'age' }
-          ]}
-            />
+
          </div>
       </div>
     );
