@@ -1,44 +1,20 @@
 import React from 'react';
-import { Table } from 'antd';
-const dataSource = [{
-  key: '1',
-  name: '胡彦斌',
-  age: 32,
-  address: '西湖区湖底公园1号'
-}, {
-  key: '2',
-  name: '胡彦祖',
-  age: 42,
-  address: '西湖区湖底公园1号'
-}];
-
-const columns = [{
-  title: '姓名',
-  dataIndex: 'name',
-  key: 'name',
-}, {
-  title: '年龄',
-  dataIndex: 'age',
-  key: 'age',
-}, {
-  title: '住址',
-  dataIndex: 'address',
-  key: 'address',
-}];
-class ResourceList extends React.Component {
+class MarkdownEdit extends React.Component {
   constructor(props) {
     super(props);
   }
-
+  componentDidMount() {
+    // console.log(SimpleMDE);
+    // let simplemde = new SimpleMDE({
+    //   element: document.getElementById("markdown-edit"),
+    //   toolbar: ["bold", "italic", "heading", "|", "quote"],
+    // });
+  }
   render() {
     return (
-      <div className="container">
-        <div className="container-box">
-            <Table dataSource={dataSource} columns={columns} />
-        </div>
-      </div>
+      <div></div>
     )
   }
 }
 
-export default ResourceList;
+export default MarkdownEdit;
