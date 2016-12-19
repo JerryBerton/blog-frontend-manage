@@ -1,18 +1,17 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
+import * as carouselAction from '../../actions/carousel';
 import './carousel.scss';
-
 import { Card, Button, Icon} from 'antd';
 import CarouseAdd from './add';
-
-@observer(['carsouleStore'])
 class Carousel extends React.Component {
   constructor(props) {
     super(props);
   }
   componentDidMount() {
-    this.props.carsouleStore.getList();
+    this.props.carouselAction.fetchList();
   }
   render() {
     return(
@@ -52,5 +51,17 @@ class Carousel extends React.Component {
     )
   }
 }
-
-export default Carousel;
+export default connect(
+  (state) => {
+    return {
+      carouselEdit: state.carousel.edit,
+      carouselRemove: state.carousel.remove,
+      carouselList: state.carousel.list
+    };
+  },
+  (dispatch) => {
+    return {
+      carouselAction: bindActionCreators(carouselAction, dispatch)
+    };
+  }
+)(Carousel)

@@ -1,9 +1,8 @@
 import React from 'react';
-import { observer } from 'mobx-react';
+import { connect } from 'react-redux';
 
 import { Button, Table, Form, Input } from 'antd';
 
-@observer(['userStore'])
 class AppComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +18,6 @@ class AppComponent extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props.userStore.userList);
     return (
       <div className="index">
         <Form inline onSubmit={this.handleSubmit}>

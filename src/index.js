@@ -1,17 +1,20 @@
 import 'core-js/fn/object/assign';
-import 'antd/dist/antd.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, browserHistory, IndexRoute, Redirect} from 'react-router';
+import { Provider } from 'react-redux';
+
+
+import 'antd/dist/antd.css';
+
 import './index.scss';
 
-import { useStrict } from 'mobx';
-import { Provider } from 'mobx-react';
-import store from './model/';
+import configureStore from './stores/';
 
 import routes from './routes';
-useStrict(true)
+let store = configureStore();
+
 ReactDOM.render(
-  <Provider { ...store }>
-    { routes }
-  </Provider>,
+  <Provider store={store}>{routes}</Provider>,
   document.getElementById('app'));
