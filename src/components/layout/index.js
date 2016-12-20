@@ -53,9 +53,9 @@ class LayoutComponent extends React.Component {
                 <Menu.Item key="article/list">文章列表</Menu.Item>
                 <Menu.Item key="article/add">编辑文章</Menu.Item>
               </Menu.SubMenu>
-              <Menu.Item key="article">
+              <Menu.Item key="category">
                 <Icon type="mail" />
-                技术文章
+                分类管理
               </Menu.Item>
               <Menu.Item key="system">
                 <Icon type="mail" />

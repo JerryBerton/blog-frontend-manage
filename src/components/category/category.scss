@@ -1,0 +1,23 @@
+.category-pannel {
+  padding: 16px;
+  .ant-row {
+    margin-left: -8px;
+    margin-right: -8px;
+    .ant-col-8 {
+      padding: 0 8px;
+    }
+  }
+  .card-item-header {
+    span {
+      cursor: pointer;
+      &:first-child {
+        float: left;
+        color: #a6470b;
+      }
+      &:last-child {
+        float: right;
+        color: #40a5ed;
+      }
+    }
+  }
+}

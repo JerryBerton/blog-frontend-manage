@@ -31,19 +31,23 @@ class CategoryAdd extends React.Component {
 
   }
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.carouselEdit.completed &&
-    //   JSON.stringify(this.props.carouselEdit) !== JSON.stringify(nextProps.carouselEdit)) {
-    //     message.success("轮播添加成功");
-    //     this.state.visible = false;
-    //     this.props.carouselAction.fetchList();
-    //   }
+    if (nextProps.articleEdit.completed &&
+      JSON.stringify(this.props.articleEdit) !== JSON.stringify(nextProps.articleEdit)) {
+        message.success("轮播添加成功, 2秒后页面跳转", 2);
+        setTimeout(() => {
+          this.context.router.push('/article/list');
+        }, 2000);
+      }
   }
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, fieldsValue) => {
      if (!err) {
-       console.log(this.state.editValue);
-       this.props.articlelAction.fetchEdit({...fieldsValue, content: this.state.editValue});
+       this.props.articlelAction.fetchEdit({
+         ...fieldsValue,
+         content: this.state.editValue,
+         tags: this.state.selectedTags
+       });
      }
     });
   }
@@ -90,8 +94,7 @@ class CategoryAdd extends React.Component {
           <Form.Item
             {...formItemLayout}
             label="标题"
-            hasFeedback
-          >
+            hasFeedback>
             {getFieldDecorator('title', {
               rules: [{
                 required: true, message: '文章标题必须传',
@@ -103,8 +106,7 @@ class CategoryAdd extends React.Component {
           <Form.Item
             {...formItemLayout}
             label="分类选择"
-            hasFeedback
-          >
+            hasFeedback>
             {getFieldDecorator('categoryId', {
               rules: [{
                 required: true, message: '必须选择文章分类',
@@ -122,8 +124,7 @@ class CategoryAdd extends React.Component {
           <Form.Item
             {...formItemLayout}
             label="标签选择"
-            hasFeedback
-          >
+            hasFeedback>
             {
               tags.map(tag => (
                 <Tag.CheckableTag
@@ -138,24 +139,21 @@ class CategoryAdd extends React.Component {
           <Form.Item
             {...formItemLayout}
             label="上传图片"
-            hasFeedback
-          >
-          <Upload
-             action="http://127.0.0.1:3000/upload"
-             listType="picture"
-             fileList={fileList}
-             onChange={this.handleUploadChange}
-           >
-           <Button type="ghost">
-            <Icon type="upload" /> upload
-            </Button>
+            hasFeedback>
+            <Upload
+               action="http://127.0.0.1:3000/upload"
+               listType="picture"
+               fileList={fileList}
+               onChange={this.handleUploadChange}>
+               <Button type="ghost">
+                  <Icon type="upload" /> upload
+               </Button>
            </Upload>
           </Form.Item>
           <Form.Item
             {...formItemLayout}
             label="描述信息"
-            hasFeedback
-          >
+            hasFeedback>
             {getFieldDecorator('description', {
               rules: [{
                 required: true, message: '信息描述必须填写',
@@ -165,22 +163,19 @@ class CategoryAdd extends React.Component {
             )}
           </Form.Item>
           <Form.Item
-           {...formItemLayout}
-           label="是否发布"
-           >
-             {getFieldDecorator('radio-group')(
-               <Radio.Group>
-                 <Radio value="1">是</Radio>
-                 <Radio value="0">否</Radio>
-               </Radio.Group>
-             )}
+            {...formItemLayout}
+            label="是否发布">
+            {getFieldDecorator('radio-group')(
+             <Radio.Group>
+               <Radio value="1">是</Radio>
+               <Radio value="0">否</Radio>
+             </Radio.Group>
+            )}
            </Form.Item>
           <Form.Item
             {...formItemLayout}
             label="描述信息"
-            hasFeedback
-           >
-
+            hasFeedback>
            <SimpleMDE
             onChange={this.handleEditChange}
            />
@@ -193,11 +188,14 @@ class CategoryAdd extends React.Component {
     )
   }
 }
+CategoryAdd.contextTypes = {
+  router: React.PropTypes.object
+}
 let CategoryAddForm = Form.create()(CategoryAdd);
 export default connect(
   (state) => {
     return {
-      carouselEdit: state.carousel.edit,
+      articleEdit: state.article.edit,
     };
   },
   (dispatch) => {

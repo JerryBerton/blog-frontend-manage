@@ -37,6 +37,7 @@ export const ARTICLE_DELETE_FAILURE = 'ARTICLE_DELETE_FAILURE';
 export function fetchRemove(id) {
   return {
     [FETCH_API]: {
+
       types: [ARTICLE_DELETE_REQUERY, ARTICLE_DELETE_SUCCESS, ARTICLE_DELETE_FAILURE],
       endpoint: `carousel/${id}`,
       method: "DELETE",
