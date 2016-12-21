@@ -4,18 +4,32 @@
   .ant-card-head {
     padding: 0 14px;
   }
+  .ant-card-body {
+    padding: 12px;
+  }
   .ant-row {
     margin-left: -8px;
     margin-right: -8px;
     .ant-col-8 {
       padding: 0 8px;
+      margin: 6px 0;
     }
   }
   .card-item-header {
     .card-item-header-left {
       cursor: pointer;
       float: left;
-      color: #a6470b;
+      span {
+        display: inline-block;
+        height: 28px;
+        line-height: 28px;
+        margin: 0 4px;
+        border: 1px solid transparent;
+        vertical-align: middle;
+        :hover {
+          color: #1c831a;
+        }
+      }
     }
     .card-item-header-right {
       cursor: pointer;

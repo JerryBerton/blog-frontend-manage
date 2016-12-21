@@ -24,9 +24,8 @@ export function fetchEdit(data) {
   return {
     [FETCH_API]: {
       types: [CATEGORY_EDIT_REQUERY, CATEGORY_EDIT_SUCCESS, CATEGORY_EDIT_FAILURE],
-      endpoint: '/authority/carousel',
+      endpoint: '/authority/category',
       method: 'POST',
-      sudo: true,
       body: data
     }
   }
@@ -39,9 +38,8 @@ export function fetchRemove(id) {
   return {
     [FETCH_API]: {
       types: [CATEGORY_DELETE_REQUERY, CATEGORY_DELETE_SUCCESS, CATEGORY_DELETE_FAILURE],
-      endpoint: `carousel/${id}`,
+      endpoint: `/authority/category/${id}`,
       method: "DELETE",
-      sudo: true
     }
   }
 }

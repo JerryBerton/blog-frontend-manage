@@ -65,7 +65,7 @@ class LayoutComponent extends React.Component {
         </section>
         <section className="layout-right" style={{minHeight: _height}}>
           <div className="layout-header">
-              <div className="layout-header-label">博客管理后台</div>
+              <div className="layout-header-label"></div>
               <div className="layout-header-user">
                 <ul>
                   <li>

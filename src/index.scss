@@ -7,8 +7,19 @@
       box-shadow:5px 5px rgba(0,0,0,.6);
     }
   }
+  .ant-card-body {
+    padding: 6px;
+  }
   .common-pannel {
     background-color: #fff;
     padding: 10px;
+  }
+  .common-operate {
+    position: relative;
+    text-align: right;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f3f3f3;
   }
 }
