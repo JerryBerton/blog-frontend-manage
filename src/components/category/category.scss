@@ -1,5 +1,9 @@
 .category-pannel {
   padding: 16px;
+  // 覆盖蚂蚁金服的样式
+  .ant-card-head {
+    padding: 0 14px;
+  }
   .ant-row {
     margin-left: -8px;
     margin-right: -8px;
@@ -8,16 +12,15 @@
     }
   }
   .card-item-header {
-    span {
+    .card-item-header-left {
       cursor: pointer;
-      &:first-child {
-        float: left;
-        color: #a6470b;
-      }
-      &:last-child {
-        float: right;
-        color: #40a5ed;
-      }
+      float: left;
+      color: #a6470b;
+    }
+    .card-item-header-right {
+      cursor: pointer;
+      float: right;
+      color: #40a5ed;
     }
   }
 }
