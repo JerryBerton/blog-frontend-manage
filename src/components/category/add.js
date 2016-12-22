@@ -76,7 +76,7 @@ class CategoryAdd extends React.Component {
             hasFeedback>
             { getFieldDecorator('name', {
               rules: [{
-                required: true, message: 'Please input your E-mail!',
+                required: true, message: '请输入分类名称',
               }],
             })(
               <Input />
