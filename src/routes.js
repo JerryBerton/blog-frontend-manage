@@ -5,6 +5,7 @@ import {
   Route,
   browserHistory,
   IndexRoute } from 'react-router';
+import UserLogin from './components/user/login';
 import App from './components/home/';
 import Layout from './components/layout/';
 import Carousel from './components/carousel/';
@@ -13,6 +14,7 @@ import ArticleAdd from './components/article/add';
 import CategoryList from './components/category/';
 const routes = (
   <Router history={browserHistory}>
+    <Route path="login" component={UserLogin}/>
     <Route path="/" component={Layout}>
       <IndexRoute component={App}/>
       <Route path="resource">

@@ -1,0 +1,24 @@
+.user-box {
+  position: fixed;
+  background-color: #f3f3f3;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  .login-panle {
+    position: relative;
+    width: 360px;
+    background-color: #2a2e19;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 16px 22px;
+    .ant-input {
+      border-radius: 0;
+    }
+    .login-form-button {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+}

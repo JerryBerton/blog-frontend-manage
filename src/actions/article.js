@@ -20,12 +20,18 @@ export const ARTICLE_EDIT_REQUERY = 'ARTICLE_EDIT_REQUERY';
 export const ARTICLE_EDIT_SUCCESS = 'ARTICLE_EDIT_SUCCESS';
 export const ARTICLE_EDIT_FAILURE = 'ARTICLE_EDIT_FAILURE';
 
-export function fetchEdit(data) {
+export function fetchEdit(data, id) {
+  let endpoint = '/authority/article';
+  let method = "POST";
+  if (id) {
+    endpoint = `/authority/article/${id}`;
+    method = "PUT"
+  }
   return {
     [FETCH_API]: {
       types: [ARTICLE_EDIT_REQUERY, ARTICLE_EDIT_SUCCESS, ARTICLE_EDIT_FAILURE],
-      endpoint: '/authority/article',
-      method: 'POST',
+      endpoint,
+      method,
       body: data
     }
   }

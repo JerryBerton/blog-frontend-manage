@@ -20,12 +20,18 @@ export const CATEGORY_EDIT_REQUERY = 'CATEGORY_EDIT_REQUERY';
 export const CATEGORY_EDIT_SUCCESS = 'CATEGORY_EDIT_SUCCESS';
 export const CATEGORY_EDIT_FAILURE = 'CATEGORY_EDIT_FAILURE';
 
-export function fetchEdit(data) {
+export function fetchEdit(data, id ) {
+  let endpoint = '/authority/category';
+  let method = "POST";
+  if (id) {
+    endpoint = `/authority/category/${id}`;
+    method = "PUT"
+  }
   return {
     [FETCH_API]: {
       types: [CATEGORY_EDIT_REQUERY, CATEGORY_EDIT_SUCCESS, CATEGORY_EDIT_FAILURE],
-      endpoint: '/authority/category',
-      method: 'POST',
+      endpoint,
+      method,
       body: data
     }
   }

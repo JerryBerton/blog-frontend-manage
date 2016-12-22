@@ -20,7 +20,8 @@ function fetchAPI(endpoint, req) {
   let parameter = {
     headers: {
       'Accept': 'application/json',
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      credentials: 'include',
     }
   };
   switch (req.method) {
