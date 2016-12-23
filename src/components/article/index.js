@@ -13,11 +13,16 @@ class ArticleList extends React.Component {
   componentWillMount() {
     this.requestData();
   }
-  componentDidMount() {
-
+  handlePageChange(current) {
+    this.requestData({current})
   }
-  requestData() {
-    this.props.articlelAction.fetchList();
+  requestData(params) {
+    let newParams = {
+      current: 1,
+      pageSize: 10,
+      ...params
+    }
+    this.props.articlelAction.fetchList(newParams);
   }
   configColumns() {
     return [
@@ -44,7 +49,15 @@ class ArticleList extends React.Component {
     }
     return (
       <div className="common-pannel">
-        <Table dataSource={article.data} columns={this.configColumns()} />
+        <Table
+          dataSource={article.data}
+          columns={this.configColumns()}
+          pagination={{
+            total: article.total,
+            pageSize: article.pageSize,
+            onChange: this.handlePageChange.bind(this),
+            showTotal: total => `共 ${total} 篇`
+          }}/>
       </div>
     )
   }

@@ -1,18 +1,22 @@
-export function setCookie(ckey, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = ckey + "=" + cvalue + "; " + expires;
+export const setCookie = function (ckey, cvalue, exdays = 1) {
+  let d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires=" + d.toUTCString();
+  document.cookie = ckey + "=" + cvalue + "; " + expires;
 }
-export function getCookie(ckey) {
- var key = ckey + "=";
- var ca = document.cookie.split(';');
- for(var i = 0; i< ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1);
-    if (c.indexOf(key) != -1) {
-      return c.substring(key.length, c.length);
+export const getCookie = function (ckey) {
+  let name = ckey + "=";
+  let ca = document.cookie.split(';');
+  for(let i=0; i< ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) ==' ') {
+      c = c.substring(1);
     }
- }
- return "";
+    if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+  }
+   return "";
+}
+//删除cookies
+export const clearCookie = function (name) {
+  setCookie(name, "", -1);
 }

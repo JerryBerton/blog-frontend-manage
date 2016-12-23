@@ -1,5 +1,5 @@
 import config from './config/base.js';
-
+import { getCookie } from './tool/cookie.js';
 import { message } from 'antd';
 export const FETCH_API = Symbol('fetch API');
 
@@ -16,12 +16,11 @@ function generateParams(url, params) {
 }
 
 function fetchAPI(endpoint, req) {
-
   let parameter = {
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       "Content-Type": "application/json",
-      credentials: 'include',
     }
   };
   switch (req.method) {
@@ -76,6 +75,9 @@ export default store => next => action => {
   }
   const [requestStatus, successStatus, failureStatus] = rule.types;
   let endpoint = `${config.api}${rule.endpoint}`;
+  if (!rule.sudo) {
+    rule.params = { ...rule.params, token: getCookie('usertoken') }
+  }
   return fetchAPI(endpoint, rule).then(
     resp => next(combineAction(
       action,

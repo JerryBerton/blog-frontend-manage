@@ -35,7 +35,7 @@ class CategoryAdd extends React.Component {
       JSON.stringify(this.props.articleEdit) !== JSON.stringify(nextProps.articleEdit)) {
         message.success("轮播添加成功, 2秒后页面跳转", 2);
         setTimeout(() => {
-          this.context.router.push('/article/list');
+          this.context.router.push('manage/article/list');
         }, 2000);
       }
   }

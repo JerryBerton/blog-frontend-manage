@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as categoryAction from '../../actions/category';
 
-import { Menu, Icon,  Breadcrumb, Badge} from 'antd';
+import { Menu, Icon,  Breadcrumb, Badge,  Dropdown} from 'antd';
 const _height = document.body.clientHeight;
 import Base64 from 'js-base64';
+import { clearCookie } from '../../tool/cookie';
 class LayoutComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -26,10 +27,23 @@ class LayoutComponent extends React.Component {
   handleClick(info) {
     this.context.router.push(`/${info.key}`);
   }
+  handleUserDrop(info) {
+    if (info.key === 'logout') {
+      clearCookie('usertoken');
+      this.context.router.push('login');
+    }
+  }
   requestCategory() {
     this.props.categoryAction.fetchList({isPage: 1});
   }
   render() {
+    const menu = (
+      <Menu onClick={this.handleUserDrop.bind(this)}>
+        <Menu.Item key="logout">
+          退出登录
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <div className="layout">
         <section className="layout-left">
@@ -46,14 +60,14 @@ class LayoutComponent extends React.Component {
             >
               <Menu.SubMenu
                 title={<span><Icon type="mail" />资源管理</span>}>
-                <Menu.Item key="resource/carousel">轮播管理</Menu.Item>
+                <Menu.Item key="manage/resource/carousel">轮播管理</Menu.Item>
               </Menu.SubMenu>
               <Menu.SubMenu
                 title={<span><Icon type="mail" />文章管理</span>}>
-                <Menu.Item key="article/list">文章列表</Menu.Item>
-                <Menu.Item key="article/add">编辑文章</Menu.Item>
+                <Menu.Item key="manage/article/list">文章列表</Menu.Item>
+                <Menu.Item key="manage/article/add">编辑文章</Menu.Item>
               </Menu.SubMenu>
-              <Menu.Item key="category">
+              <Menu.Item key="manage/category">
                 <Icon type="mail" />
                 分类管理
               </Menu.Item>
@@ -68,13 +82,13 @@ class LayoutComponent extends React.Component {
               <div className="layout-header-label"></div>
               <div className="layout-header-user">
                 <ul>
-                  <li>
-                    <a className="layout-list-item">
-                    <Icon type="bars" />
-                    </a>
-                  </li>
                   <li><a className="layout-list-item"><Icon type="mail" /></a></li>
                   <li><a className="layout-list-item"><Icon type="notification"/></a></li>
+                  <li>
+                    <Dropdown overlay={menu} trigger={['click']}>
+                      <a className="layout-list-item"> <Icon type="logout" /></a>
+                    </Dropdown>
+                  </li>
                 </ul>
               </div>
           </div>
