@@ -60,7 +60,7 @@ export function fetchLogin(data) {
   return {
     [FETCH_API]: {
       types: [USER_LOGIN_REQUERY, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE],
-      endpoint: '/authority/user/login',
+      endpoint: '/user/login',
       method: 'POST',
       sudo: true,
       body: data

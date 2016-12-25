@@ -30,7 +30,7 @@ class LayoutComponent extends React.Component {
   handleUserDrop(info) {
     if (info.key === 'logout') {
       clearCookie('usertoken');
-      this.context.router.push('login');
+      this.context.router.push('/login');
     }
   }
   requestCategory() {

@@ -5,20 +5,43 @@
   top: 0;
   bottom: 0;
   .login-panle {
-    position: relative;
+    position: absolute;;
     width: 360px;
     background-color: #2a2e19;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%) ;
     background-color: #fff;
-    padding: 16px 22px;
-    .ant-input {
-      border-radius: 0;
+    padding-top: 4px;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 16px;
+    .login-form {
+      margin-top: 50px;
+      .ant-input {
+        border-radius: 0;
+      }
+      .login-form-button {
+        width: 100%;
+        border-radius: 0;
+      }
+
     }
-    .login-form-button {
-      width: 100%;
-      border-radius: 0;
+    &:before {
+      content: "管理系统";
+      width: 160px;
+      height: 42px;
+      position: absolute;
+      left: 50%;
+      top: -4px;
+      line-height: 42px;
+      margin-left: -80px;
+      text-align: center;
+      background: #c18b86;
+      box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, .6);
+      font-size: 18px;
+      color: #fff;
     }
+
   }
 }
