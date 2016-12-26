@@ -62,6 +62,10 @@ class LayoutComponent extends React.Component {
                 title={<span><Icon type="mail" />资源管理</span>}>
                 <Menu.Item key="manage/resource/carousel">轮播管理</Menu.Item>
               </Menu.SubMenu>
+              <Menu.Item key="manage/reptile">
+                <Icon type="mail" />
+                爬虫管理
+              </Menu.Item>
               <Menu.SubMenu
                 title={<span><Icon type="mail" />文章管理</span>}>
                 <Menu.Item key="manage/article/list">文章列表</Menu.Item>

@@ -9,6 +9,8 @@ import Carousel from './components/carousel/';
 import ArticleList from './components/article/';
 import ArticleAdd from './components/article/add';
 import CategoryList from './components/category/';
+import ReptileList from './components/reptile/';
+import ReptileCapture from './components/reptile/capture';
 const handleEnter = (nextState, replaceState, callback) => {
   if (getCookie('token')) {
     callback();
@@ -25,6 +27,8 @@ const routes = (
       <Route path="resource">
         <Route path="carousel" component={Carousel}/>
       </Route>
+      <Route path="reptile" component={ReptileList}/>
+      <Route path="reptile/capture/:id" component={ReptileCapture}/>
       <Route path="article">
         <Route path="list" component={ArticleList}/>
         <Route path="add" component={ArticleAdd}/>
