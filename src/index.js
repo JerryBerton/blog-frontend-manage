@@ -4,11 +4,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute, Redirect} from 'react-router';
 import { Provider } from 'react-redux';
+// 样式的导入
+import './styles/index.scss';
+import './styles/index.less';
 
-import './index.scss';
-import 'antd/dist/antd.css';
 import 'react-simplemde-editor/dist/simplemde.min.css';
-
 
 import configureStore from './stores/';
 

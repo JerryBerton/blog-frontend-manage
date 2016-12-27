@@ -1,5 +1,11 @@
 .capture-box {
   position: relative;
+  .capture-edit {
+    span {
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
   .capture-box-title {
     padding-top: 12px;
     padding-bottom: 12px;
