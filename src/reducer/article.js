@@ -5,6 +5,9 @@ import {
   ARTICLE_LIST_REQUERY,
   ARTICLE_LIST_SUCCESS,
   ARTICLE_LIST_FAILURE,
+  ARTICLE_DETAIL_REQUERY,
+  ARTICLE_DETAIL_SUCCESS,
+  ARTICLE_DETAIL_FAILURE,
   ARTICLE_EDIT_REQUERY,
   ARTICLE_EDIT_SUCCESS,
   ARTICLE_EDIT_FAILURE,
@@ -27,6 +30,29 @@ const list = (state = {}, action) => {
         result: action.resp
       }
     case ARTICLE_LIST_FAILURE:
+      return {
+        ...state,
+        completed: false,
+      }
+    default:
+      return state;
+  }
+}
+
+const detail = (state = {}, action) => {
+  switch (action.type) {
+    case ARTICLE_DETAIL_REQUERY:
+      return {
+        ...state,
+        completed: false,
+      }
+    case ARTICLE_DETAIL_SUCCESS:
+      return {
+        ...state,
+        completed: true,
+        result: action.resp
+      }
+    case ARTICLE_DETAIL_FAILURE:
       return {
         ...state,
         completed: false,
@@ -83,6 +109,7 @@ const remove = (state = {}, action) => {
 }
 export default combineReducers({
   list,
+  detail,
   edit,
   remove
 });

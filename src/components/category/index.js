@@ -124,7 +124,7 @@ class CategoryList extends React.Component {
     Modal.confirm({
         title: '温馨提醒',
         content: '你确定要在该分类下添加标签吗?',
-        onOk() {
+        onOk: ()=> {
           const data = {
             categoryId: that.state.tagParentId,
             name: value

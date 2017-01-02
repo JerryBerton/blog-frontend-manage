@@ -26,11 +26,18 @@ class CategoryAdd extends React.Component {
     let category = localStorage.getItem("category");//获取b的值
     category = JSON.parse(Base64.Base64.decode(category));
     this.state.category = category;
+    const { location } = this.props;
+    if (location.query.type === 'mod') {
+      let id = location.query.id;
+      this.props.articlelAction.fetchDetail(id);
+    }
   }
   componentDidMount() {
 
   }
+
   componentWillReceiveProps(nextProps) {
+    const { location } = this.props;
     if (nextProps.articleEdit.completed &&
       JSON.stringify(this.props.articleEdit) !== JSON.stringify(nextProps.articleEdit)) {
         message.success("轮播添加成功, 2秒后页面跳转", 2);
@@ -38,6 +45,13 @@ class CategoryAdd extends React.Component {
           this.context.router.push('manage/article/list');
         }, 2000);
       }
+      if (location.query.type === 'mod' && nextProps.articleDetail.completed &&
+        JSON.stringify(this.props.articleDetail) !== JSON.stringify(nextProps.articleDetail)) {
+          let detail = {...nextProps.articleDetail.result};
+          detail.categoryId = detail.categoryId && detail.categoryId.toString();
+          this.state.editValue = detail.content;
+          this.props.form.setFieldsValue(detail);
+        }
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -165,7 +179,7 @@ class CategoryAdd extends React.Component {
           <Form.Item
             {...formItemLayout}
             label="是否发布">
-            {getFieldDecorator('radio-group')(
+            {getFieldDecorator('type')(
              <Radio.Group>
                <Radio value="1">是</Radio>
                <Radio value="0">否</Radio>
@@ -177,7 +191,8 @@ class CategoryAdd extends React.Component {
             label="描述信息"
             hasFeedback>
            <SimpleMDE
-            onChange={this.handleEditChange}
+             value={this.state.editValue}
+             onChange={this.handleEditChange}
            />
           </Form.Item>
           <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
@@ -196,6 +211,7 @@ export default connect(
   (state) => {
     return {
       articleEdit: state.article.edit,
+      articleDetail: state.article.detail
     };
   },
   (dispatch) => {

@@ -32,10 +32,11 @@ class UserLogin extends React.Component {
     return (
       <div className="user-box">
         <div className="login-panle">
-          
+
           <Form
             onSubmit={this.handleSubmit.bind(this)}
             className="login-form">
+            <h2>后台管理</h2>
             <Form.Item>
               {getFieldDecorator('username', {
                 rules: [{ required: true, message: 'Please input your username!' }],

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Base64 from 'js-base64';
 import * as reptileAction from '../../actions/reptile';
+import * as articleAction from '../../actions/article';
 import { Spin, Icon} from 'antd';
 import './index.scss';
-import DumpArticle from './dump_article';
 class ReptileCapture extends React.Component {
   constructor(props) {
     super(props)
@@ -22,39 +22,36 @@ class ReptileCapture extends React.Component {
     this.props.reptileAction.fetchCapture({ id, href });
   }
   handleClickShow() {
-    let visible = !this.state.visible;
-    this.setState({ visible });
+      let reptileCaptrue = this.props.reptileCaptrue;
+      let data = { ...reptileCaptrue.result };
+      data.origin = data.url;
+      data.description = data.title;
+      this.props.articleAction.fetchEdit(data);
   }
   render() {
     let reptileCaptrue = this.props.reptileCaptrue;
-    let visible = this.state.visible;
+
     return (
       <Spin tip="捕获中..." spinning={!reptileCaptrue.completed}>
         <div className="capture-box">
           <div className="common-fixd capture-edit">
-            <span onClick={this.handleClickShow}>编辑</span>
+            <span onClick={this.handleClickShow}>存储</span>
           </div>
-          {
-            visible ? (<DumpArticle data={reptileCaptrue.result}/>) : (
-              <div>
-                <div className="capture-box-title">
-                  <p>{reptileCaptrue.result && reptileCaptrue.result.title}</p>
-                  <p className="capture-box-origin">
-                  来源URL:
-                  { reptileCaptrue.result && reptileCaptrue.result.url}
-                  </p>
-                </div>
-                <div
-                  className="capture-markdown"
-                  dangerouslySetInnerHTML={
-                    { __html: reptileCaptrue.result
-                      && reptileCaptrue.result.content
-                    }
-                }>
-                </div>
-              </div>
-            )
-          }
+          <div className="capture-box-title">
+            <p>{reptileCaptrue.result && reptileCaptrue.result.title}</p>
+            <p className="capture-box-origin">
+            来源URL:
+            { reptileCaptrue.result && reptileCaptrue.result.url}
+            </p>
+          </div>
+          <div
+            className="capture-markdown"
+            dangerouslySetInnerHTML={
+              { __html: reptileCaptrue.result
+                && reptileCaptrue.result.content
+              }
+          }>
+          </div>
         </div>
       </Spin>
     )
@@ -63,12 +60,13 @@ class ReptileCapture extends React.Component {
 export default connect(
   (state) => {
     return {
-      reptileCaptrue: state.reptile.capture
+      reptileCaptrue: state.reptile.capture,
     };
   },
   (dispatch) => {
     return {
-      reptileAction: bindActionCreators(reptileAction, dispatch)
+      reptileAction: bindActionCreators(reptileAction, dispatch),
+      articleAction: bindActionCreators(articleAction, dispatch)
     };
   }
 )(ReptileCapture)

@@ -46,14 +46,30 @@ class LayoutComponent extends React.Component {
     );
     return (
       <div className="layout">
-        <section className="layout-left">
-          <header>
-            <img
-              style={{ width: "100%" }}
-              src="http://7xr8fr.com1.z0.glb.clouddn.com/logo.png"/>
-          </header>
+        <header className="layout-header">
+            <div className="layout-header-icon"><Icon type="dingding" /></div>
+            <div className="layout-header-label">
+              博客后台管理系统
+            </div>
+            <div className="layout-header-user">
+                <span className="layout-list-item"><Icon type="mail" /></span>
+                <span className="layout-list-item"><Icon type="notification"/></span>
+                <span className="layout-list-item">
+                  <Dropdown overlay={menu} trigger={['click']}>
+                     <Icon type="logout" />
+                  </Dropdown>
+                </span>
+            </div>
+        </header>
+        <section className="layout-menu">
+            <div className="menu-header">
+              <div className="avater">
+                <img src="http://7xr8fr.com1.z0.glb.clouddn.com/IMG_2197.JPG"/>
+              </div>
+              <div className="info">王敬博</div>
+            </div>
             <Menu
-              theme="dark"
+              className="menu-theme"
               style={{ width: 240 }}
               mode="inline"
               onClick={this.handleClick}
@@ -69,7 +85,7 @@ class LayoutComponent extends React.Component {
               <Menu.SubMenu
                 title={<span><Icon type="mail" />文章管理</span>}>
                 <Menu.Item key="manage/article/list">文章列表</Menu.Item>
-                <Menu.Item key="manage/article/add">编辑文章</Menu.Item>
+                <Menu.Item key="manage/article/edit?type=new">编辑文章</Menu.Item>
               </Menu.SubMenu>
               <Menu.Item key="manage/category">
                 <Icon type="mail" />
@@ -82,20 +98,7 @@ class LayoutComponent extends React.Component {
             </Menu>
         </section>
         <section className="layout-right" style={{minHeight: _height}}>
-          <div className="layout-header">
-              <div className="layout-header-label"></div>
-              <div className="layout-header-user">
-                <ul>
-                  <li><a className="layout-list-item"><Icon type="mail" /></a></li>
-                  <li><a className="layout-list-item"><Icon type="notification"/></a></li>
-                  <li>
-                    <Dropdown overlay={menu} trigger={['click']}>
-                      <a className="layout-list-item"> <Icon type="logout" /></a>
-                    </Dropdown>
-                  </li>
-                </ul>
-              </div>
-          </div>
+
           <div className="layout-body">
             {this.props.children}
           </div>

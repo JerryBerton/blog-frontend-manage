@@ -1,9 +1,10 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as articlelAction from '../../actions/article';
 
-import { Table } from 'antd';
+import { Table, Icon } from 'antd';
 import moment from 'moment';
 
 class ArticleList extends React.Component {
@@ -26,19 +27,29 @@ class ArticleList extends React.Component {
   }
   configColumns() {
     return [
-      { title: '标题', dataIndex: 'title', key: 'title' },
-      { title: '分类', dataIndex: 'category', key: 'category',
+      { title: '标题', className:'common-td', dataIndex: 'title', key: 'title' },
+      { title: '分类', className:'common-td', dataIndex: 'category', key: 'category',
         render(category) {
           return category && category.name
         }
       },
-      { title: '浏览次数', dataIndex: 'hits', key: 'hits' },
-      { title: '点赞统计', dataIndex: 'stars', key: 'stars' },
-      { title: '创建时间', dataIndex: 'createdAt', key: 'createdAt',
+      { title: '浏览次数', className:'common-td', dataIndex: 'hits', key: 'hits' },
+      { title: '点赞统计', className:'common-td', dataIndex: 'stars', key: 'stars' },
+      { title: '创建时间', className:'common-td', dataIndex: 'createdAt', key: 'createdAt',
         render(createdAt) { return createdAt && moment(createdAt).format('YYYY-MM-DD hh:mm')}
       },
-      { title: '更新时间', dataIndex: 'updatedAt', key: 'updatedAt',
+      { title: '更新时间', className:'common-td', dataIndex: 'updatedAt', key: 'updatedAt',
         render(updatedAt) { return updatedAt && moment(updatedAt).format('YYYY-MM-DD hh:mm')}
+      },
+      { title: '功能', className:'common-td',  key: 'action',
+        render(record) {
+          return (
+            <div>
+              <Link to={`/manage/article/edit?type=mod&id=${record.id}`} className="common-action ">编辑</Link>
+              <Link className="common-action ">删除</Link>
+            </div>
+          )
+        }
       }
     ];
   }
@@ -57,7 +68,8 @@ class ArticleList extends React.Component {
             pageSize: article.pageSize,
             onChange: this.handlePageChange.bind(this),
             showTotal: total => `共 ${total} 篇`
-          }}/>
+          }}
+          bordered/>
       </div>
     )
   }

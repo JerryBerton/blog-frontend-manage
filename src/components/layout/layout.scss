@@ -1,10 +1,83 @@
+$bgMenu: #2f3c43;
+$bgMenu2: #1c2429;
 .layout {
-  .layout-left {
+  header.layout-header {
     position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 8;
+    height: 50px;
+    line-height: 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #e9e9e9;
+    .layout-header-icon {
+      float: left;
+      padding: 0 22px;
+    }
+    .layout-header-label {
+      float: left;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .layout-header-user {
+      float: right;
+      padding-right: 10px;
+      &:after {
+        content: "";
+        clear: both;
+      }
+      .layout-list-item {
+        padding: 0 15px;
+        font-size: 18px;
+        display: inline-block;
+        cursor: pointer;
+        &:hover {
+          background-color: #2f3c43;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .layout-menu {
+    position: fixed;
+    top: 50px;
     width: 240px;
     height: 100%;
-    background-color: #404040;
+    background-color: $bgMenu;
     overflow: scroll;
+    border-right: 1px solid #e9e9e9;
+    .menu-header {
+      height: 96px;
+      background-color: #37474f;
+      position: relative;
+      padding: 16px;
+      .info {
+        padding: 10px 0 10px 80px;
+        font-size: 18px;
+        color: #eceff1;
+        line-height: 46px;
+      }
+      .avater {
+        width: 64px;
+        height: 64px;
+        position: absolute;
+        img {
+          width: 100%;
+          border-radius: 50%;
+          height: 100%;
+        }
+      }
+    }
+    .menu-theme {
+      background-color: $bgMenu;
+      color: #b0bec5;
+      .ant-menu-submenu-active {
+        color: #fff;
+      }
+      .ant-menu {
+        background-color: $bgMenu2;
+      }
+    }
     header {
       padding: 6px 10px;
     }
@@ -15,56 +88,7 @@
     padding-top: 50px;
     background: #f3f3f3;
   }
-  .layout-header {
-    position: fixed;
-    top: 0;
-    left: 240px;
-    width: 100%;
-    z-index: 8;
-    border-bottom: 1px solid #e9e9e9;
-    background-color: #fff;
-    .layout-header-label {
-      float: left;
-      height: 50px;
-      line-height: 50px;
-      padding-left: 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .layout-header-user {
-      float: right;
-      margin-right: 255px;
-      &:after {
-        content: "";
-        clear: both;
-      }
-      ul {
-        list-style: none;
-        margin: 0;
-        li {
-          float: left;
-          position: relative;
-          display: inline-block;
-        }
-        .layout-list-item {
-          padding: 12px 15px;
-          height: 50px;
-          display: inline-block;
-          font-size: 16px;
-          background: #fff;
-          color: #333;
-          border-color: #fff;
-          -moz-transition: all 0.2s ease-out 0s;
-          -webkit-transition: all 0.2s ease-out 0s;
-          transition: all 0.2s ease-out 0s;
-          &:hover {
-            background-color: #424f63;
-            color: #65cea7;
-          }
-        }
-      }
-    }
-  }
+
   .layout-body {
     position: relative;
     padding: 16px;

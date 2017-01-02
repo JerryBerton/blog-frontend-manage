@@ -14,6 +14,12 @@
     background-color: #fff;
     padding: 10px;
   }
+  .common-td {
+    text-align: center;
+    .common-action {
+      display: inline-block;
+    }
+  }
   .common-operate {
     position: relative;
     text-align: right;

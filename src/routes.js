@@ -31,7 +31,7 @@ const routes = (
       <Route path="reptile/capture/:id" component={ReptileCapture}/>
       <Route path="article">
         <Route path="list" component={ArticleList}/>
-        <Route path="add" component={ArticleAdd}/>
+        <Route path="edit" component={ArticleAdd}/>
       </Route>
       <Route path="category" component={CategoryList}/>
     </Route>

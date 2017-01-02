@@ -16,6 +16,20 @@ export function fetchList(params) {
   }
 }
 
+export const ARTICLE_DETAIL_REQUERY = 'ARTICLE_DETAIL_REQUERY';
+export const ARTICLE_DETAIL_SUCCESS = 'ARTICLE_DETAIL_SUCCESS';
+export const ARTICLE_DETAIL_FAILURE = 'ARTICLE_DETAIL_FAILURE';
+
+export function fetchDetail(id) {
+  return {
+    [FETCH_API]: {
+      types: [ARTICLE_DETAIL_REQUERY, ARTICLE_DETAIL_SUCCESS, ARTICLE_DETAIL_FAILURE],
+      endpoint: `/authority/article/${id}`,
+      method: 'GET'
+    }
+  }
+}
+
 export const ARTICLE_EDIT_REQUERY = 'ARTICLE_EDIT_REQUERY';
 export const ARTICLE_EDIT_SUCCESS = 'ARTICLE_EDIT_SUCCESS';
 export const ARTICLE_EDIT_FAILURE = 'ARTICLE_EDIT_FAILURE';
