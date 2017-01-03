@@ -11,18 +11,24 @@ import { clearCookie } from '../../tool/cookie';
 class LayoutComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedKeys:[]
+    }
     this.handleClick = this.handleClick.bind(this);
   }
   componentWillMount() {
     this.requestCategory();
   }
   componentWillReceiveProps(nextProps) {
+    const { location } = this.props;
+    this.state.selectedKeys = [location.pathname];
     if (nextProps.categoryList.completed &&
       JSON.stringify(nextProps.categoryList)!== JSON.stringify(this.props.categoryList)) {
         let categoryList = nextProps.categoryList.result.data;
         localStorage.setItem("category",
         Base64.Base64.encode(JSON.stringify(categoryList)));
-      }
+    }
+
   }
   handleClick(info) {
     this.context.router.push(`/${info.key}`);
@@ -72,6 +78,7 @@ class LayoutComponent extends React.Component {
               className="menu-theme"
               style={{ width: 240 }}
               mode="inline"
+              selectedKeys={this.state.selectedKeys}
               onClick={this.handleClick}
             >
               <Menu.SubMenu
