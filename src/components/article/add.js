@@ -45,13 +45,20 @@ class CategoryAdd extends React.Component {
           this.context.router.push('manage/article/list');
         }, 2000);
       }
-      if (location.query.type === 'mod' && nextProps.articleDetail.completed &&
-        JSON.stringify(this.props.articleDetail) !== JSON.stringify(nextProps.articleDetail)) {
-          let detail = {...nextProps.articleDetail.result};
-          detail.categoryId = detail.categoryId && detail.categoryId.toString();
-          this.state.editValue = detail.content;
-          this.props.form.setFieldsValue(detail);
-        }
+    // 如果 type = mod 代表是编辑
+    if (location.query.type === 'mod' && nextProps.articleDetail.completed &&
+      JSON.stringify(this.props.articleDetail) !== JSON.stringify(nextProps.articleDetail)) {
+        let detail = {...nextProps.articleDetail.result};
+        detail.categoryId = detail.categoryId && detail.categoryId.toString();
+        this.state.editValue = detail.content;
+        this.props.form.setFieldsValue(detail);
+    }
+
+    if (location.query.type === 'new')  {
+      console.log(12321);
+      this.props.form.resetFields();
+      this.state.editValue = null;
+    }
   }
   handleSubmit(e) {
     e.preventDefault();

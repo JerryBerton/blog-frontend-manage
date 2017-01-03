@@ -11,6 +11,9 @@ const columns = [{
   title: '标题',
   dataIndex: 'title',
 }, {
+  title: '描述信息',
+  dataIndex: 'description'
+}, {
   title: '浏览量',
   dataIndex: 'visits',
 }, {
@@ -47,7 +50,8 @@ class Reptile extends React.Component {
       <div className="common-pannel">
         <Table
           columns={columns}
-          dataSource={list}/>
+          dataSource={list}
+          pagination={false}/>
       </div>
     )
   }

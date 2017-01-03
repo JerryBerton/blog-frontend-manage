@@ -12,10 +12,26 @@
     background-color: #fff;
     text-align: center;
     font-size: 14px;
-    .capture-box-origin {
+    p.capture-title {
+      font-size: 16px;
+      line-height: 2.3333;
+    }
+    p.capture-desc {
+      font-size: 12px;
+      line-height: 2.3333;
+    }
+    span {
+      margin: 0 2px;
+      color: rgb(158, 159, 82);
+    }
+    ul.capture-box-origin {
       font-size: 10px;
-      margin-top: 2px;
-      color:#795f3e;
+      margin: auto;
+      li {
+        display: inline-block;
+        margin: 0 3px;
+
+      }
     }
   }
   .capture-markdown {
@@ -29,6 +45,16 @@
       font-size: 14px;
       line-height: 1.7em;
       overflow: auto;
+    }
+  }
+
+  .capture-opt {
+    padding: 10px;
+    margin-top: 12px;
+    text-align: center;
+    background-color: #fff;
+    button {
+      margin: 0 12px;
     }
   }
 }

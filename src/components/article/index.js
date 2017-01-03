@@ -4,9 +4,12 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as articlelAction from '../../actions/article';
 
-import { Table, Icon } from 'antd';
+import { Table, Icon, Switch} from 'antd';
 import moment from 'moment';
-
+const TYPE = {
+  1: '私有',
+  2: '转载'
+}
 class ArticleList extends React.Component {
   constructor(props) {
     super(props);
@@ -28,19 +31,32 @@ class ArticleList extends React.Component {
   configColumns() {
     return [
       { title: '标题', className:'common-td', dataIndex: 'title', key: 'title' },
+      { title: '作者', className:'common-td', dataIndex: 'author', key: 'author' },
+      { title: '类型', className:'common-td', dataIndex: 'type', key: 'type', render(type) {
+        return TYPE[type]
+      }},
       { title: '分类', className:'common-td', dataIndex: 'category', key: 'category',
         render(category) {
           return category && category.name
         }
       },
-      { title: '浏览次数', className:'common-td', dataIndex: 'hits', key: 'hits' },
+      { title: '浏览次数', className:'common-td', dataIndex: 'visits', key: 'visits' },
       { title: '点赞统计', className:'common-td', dataIndex: 'stars', key: 'stars' },
+
       { title: '创建时间', className:'common-td', dataIndex: 'createdAt', key: 'createdAt',
         render(createdAt) { return createdAt && moment(createdAt).format('YYYY-MM-DD hh:mm')}
       },
       { title: '更新时间', className:'common-td', dataIndex: 'updatedAt', key: 'updatedAt',
         render(updatedAt) { return updatedAt && moment(updatedAt).format('YYYY-MM-DD hh:mm')}
       },
+      { title: '状态', className:'common-td', dataIndex: 'disabled', key: 'disabled', render(disabled) {
+        return (
+          <Switch
+            checked={disabled==='0'? false : true}
+            checkedChildren={'开'}
+            unCheckedChildren={'关'} />
+        )
+      }},
       { title: '功能', className:'common-td',  key: 'action',
         render(record) {
           return (
