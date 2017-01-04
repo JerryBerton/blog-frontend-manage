@@ -3,30 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MarkdownEdit from '../resource/index.js';
 import * as articlelAction from '../../actions/article';
+import * as categoryAction from '../../actions/category';
 
 import SimpleMDE from 'react-simplemde-editor';
-import { Button, Form, message, Input, Upload, Icon, Modal, Select, Tag, Radio} from 'antd';
+import { Button, Form, message, Input, Upload, Icon, Modal, Select, Radio} from 'antd';
 import Base64 from 'js-base64';
 class CategoryAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       fileList: [],
-      category: [],
-      tags: [],
-      selectedTags: [],
       editValue: null
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEditChange = this.handleEditChange.bind(this);
     this.handleUploadChange = this.handleUploadChange.bind(this);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
   componentWillMount() {
-    let category = localStorage.getItem("category");//获取b的值
-    category = JSON.parse(Base64.Base64.decode(category));
-    this.state.category = category;
     const { location } = this.props;
+    this.props.categoryAction.fetchList({isPage: 1});
     if (location.query.type === 'mod') {
       let id = location.query.id;
       this.props.articlelAction.fetchDetail(id);
@@ -54,11 +49,11 @@ class CategoryAdd extends React.Component {
         this.props.form.setFieldsValue(detail);
     }
 
-    if (location.query.type === 'new')  {
-      console.log(12321);
-      this.props.form.resetFields();
-      this.state.editValue = null;
-    }
+    // if (location.query.type === 'new')  {
+    //   console.log(12321);
+    //   this.props.form.resetFields();
+    //   this.state.editValue = null;
+    // }
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -67,31 +62,12 @@ class CategoryAdd extends React.Component {
        this.props.articlelAction.fetchEdit({
          ...fieldsValue,
          content: this.state.editValue,
-         tags: this.state.selectedTags
        });
      }
     });
   }
   handleEditChange(value) {
     this.setState({ editValue: value});
-  }
-  // tag 选中时
-  handleTagChange(id, checked) {
-    const { selectedTags } = this.state;
-    let nextSelectedTags = [];
-    if (checked) {
-      nextSelectedTags = [...selectedTags, id]
-    } else {
-      nextSelectedTags = selectedTags.filter(t =>  t !== id);
-    }
-    this.setState({ selectedTags: nextSelectedTags });
-  }
-  // 下拉框改变时
-  handleSelectChange(value) {
-    let result = this.state.category.find(item => item.id === parseInt(value));
-    if (result) {
-      this.setState({ tags: result.tags });
-    }
   }
   // 文件上传后的钩子
   handleUploadChange({ file, fileList }) {
@@ -104,11 +80,15 @@ class CategoryAdd extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { fileList, category, tags, selectedTags } = this.state;
+    const fileList = this.state.fileList;
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
+    let category = [];
+    if (this.props.categoryList.completed) {
+      category = this.props.categoryList.result.data;
+    }
     return(
       <div className="common-pannel" >
         <Form horizontal onSubmit={this.handleSubmit}>
@@ -133,7 +113,7 @@ class CategoryAdd extends React.Component {
                 required: true, message: '必须选择文章分类',
               }],
             })(
-              <Select placeholder="请选择一个分类" onChange={this.handleSelectChange}>
+              <Select placeholder="请选择一个分类">
                 {
                   category.map(item => (
                     <Select.Option value={item.id.toString()} key={item.id}>{item.name}</Select.Option>
@@ -141,21 +121,6 @@ class CategoryAdd extends React.Component {
                 }
               </Select>
             )}
-          </Form.Item>
-          <Form.Item
-            {...formItemLayout}
-            label="标签选择"
-            hasFeedback>
-            {
-              tags.map(tag => (
-                <Tag.CheckableTag
-                  checked={selectedTags.indexOf(tag.id) > -1}
-                  onChange={checked => this.handleTagChange(tag.id, checked)}
-                  key={tag.id}>
-                  {tag.name}
-                </Tag.CheckableTag>
-              ))
-            }
           </Form.Item>
           <Form.Item
             {...formItemLayout}
@@ -198,7 +163,7 @@ class CategoryAdd extends React.Component {
             label="描述信息"
             hasFeedback>
            <SimpleMDE
-             value={this.state.editValue}
+
              onChange={this.handleEditChange}
            />
           </Form.Item>
@@ -218,12 +183,14 @@ export default connect(
   (state) => {
     return {
       articleEdit: state.article.edit,
-      articleDetail: state.article.detail
+      articleDetail: state.article.detail,
+      categoryList: state.category.list
     };
   },
   (dispatch) => {
     return {
-      articlelAction: bindActionCreators(articlelAction, dispatch)
+      articlelAction: bindActionCreators(articlelAction, dispatch),
+      categoryAction: bindActionCreators(categoryAction, dispatch)
     };
   }
 )(CategoryAddForm)

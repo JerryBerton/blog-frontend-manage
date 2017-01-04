@@ -1,12 +1,9 @@
 import './layout.scss';
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as categoryAction from '../../actions/category';
 
 import { Menu, Icon,  Breadcrumb, Badge,  Dropdown} from 'antd';
 const _height = document.body.clientHeight;
-import Base64 from 'js-base64';
+
 import { clearCookie } from '../../tool/cookie';
 class LayoutComponent extends React.Component {
   constructor(props) {
@@ -16,18 +13,10 @@ class LayoutComponent extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
   }
-  componentWillMount() {
-    this.requestCategory();
-  }
+
   componentWillReceiveProps(nextProps) {
     const { location } = this.props;
     this.state.selectedKeys = [location.pathname];
-    if (nextProps.categoryList.completed &&
-      JSON.stringify(nextProps.categoryList)!== JSON.stringify(this.props.categoryList)) {
-        let categoryList = nextProps.categoryList.result.data;
-        localStorage.setItem("category",
-        Base64.Base64.encode(JSON.stringify(categoryList)));
-    }
 
   }
   handleClick(info) {
@@ -38,9 +27,6 @@ class LayoutComponent extends React.Component {
       clearCookie('usertoken');
       this.context.router.push('/login');
     }
-  }
-  requestCategory() {
-    this.props.categoryAction.fetchList({isPage: 1});
   }
   render() {
     const menu = (
@@ -119,15 +105,4 @@ LayoutComponent.contextTypes = {
   router: React.PropTypes.object
 };
 
-export default connect(
-  (state) => {
-    return {
-      categoryList: state.category.list
-    };
-  },
-  (dispatch) => {
-    return {
-      categoryAction: bindActionCreators(categoryAction, dispatch)
-    };
-  }
-)(LayoutComponent)
+export default LayoutComponent

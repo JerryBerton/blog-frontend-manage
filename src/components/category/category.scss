@@ -1,40 +1,23 @@
 .category-pannel {
   padding: 16px;
   // 覆盖蚂蚁金服的样式
-  .ant-card-head {
-    padding: 0 14px;
-  }
-  .ant-card-body {
-    padding: 12px;
-  }
-  .ant-row {
-    margin-left: -8px;
-    margin-right: -8px;
-    .ant-col-8 {
-      padding: 0 8px;
-      margin: 6px 0;
-    }
-  }
-  .card-item-header {
-    .card-item-header-left {
-      cursor: pointer;
-      float: left;
-      span {
-        display: inline-block;
-        height: 28px;
-        line-height: 28px;
-        margin: 0 4px;
-        border: 1px solid transparent;
-        vertical-align: middle;
-        :hover {
-          color: #1c831a;
-        }
+  .category-item {
+    margin: 0 6px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    background-color: #f7f7f7;
+    display: inline-block;
+    border: 1px solid #e9e9e9;
+    color: rgba(0, 0, 0, 0.65);
+    span {
+      &:nth-child(1) {
+        margin-right: 4px;
+        font-size: 12px;
       }
-    }
-    .card-item-header-right {
-      cursor: pointer;
-      float: right;
-      color: #40a5ed;
+      &:nth-child(2) {
+        color: #0e77ca;
+        cursor: pointer;
+      }
     }
   }
 }

@@ -2,10 +2,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as categoryAction from '../../actions/category';
-import * as tagAction from '../../actions/tag';
 
 import './category.scss';
-import CategoryAdd from './add.js';
 
 import { Row, Col, Card, Icon, Tag, Input, Popconfirm, Button, message, Modal} from 'antd';
 
@@ -18,11 +16,15 @@ class CategoryList extends React.Component {
       categoryName: null,
       visible: false
     };
-    this.handleCloseEditClick = this.handleCloseEditClick.bind(this);
-    this.handleSaveEditClick = this.handleSaveEditClick.bind(this);
-    this.handleCloseEditClick = this.handleCloseEditClick.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
-    this.handleSubmitTag = this.handleSubmitTag.bind(this);
+    // this.handleCloseEditClick = this.handleCloseEditClick.bind(this);
+    // this.handleSaveEditClick = this.handleSaveEditClick.bind(this);
+    // this.handleCloseEditClick = this.handleCloseEditClick.bind(this);
+     this.handleChangeInput = this.handleChangeInput.bind(this);
+    // this.handleSubmitTag = this.handleSubmitTag.bind(this);
+    this.handleClickAdd = this.handleClickAdd.bind(this);
+  }
+  componentWillMount() {
+    this.props.categoryAction.fetchList({isPage: 1});
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.categoryEdit.completed &&
@@ -37,16 +39,6 @@ class CategoryList extends React.Component {
         message.success("分类删除成功");
         this.props.categoryAction.fetchList();
     }
-    if (nextProps.tagEdit.completed &&
-      JSON.stringify(this.props.tagEdit) !== JSON.stringify(nextProps.tagEdit)) {
-        message.success("标签添加成功");
-        this.props.categoryAction.fetchList();
-    }
-    if (nextProps.tagRemove.completed &&
-      JSON.stringify(this.props.tagRemove) !== JSON.stringify(nextProps.tagRemove)) {
-        message.success("分类删除成功");
-        this.props.categoryAction.fetchList();
-    }
   }
   handleOpenEditClick(record) {
     this.setState({
@@ -54,8 +46,20 @@ class CategoryList extends React.Component {
       categoryName: record.name
     });
   }
-  handleCloseEditClick() {
-    this.setState({categoryId: null});
+  handleClickAdd() {
+    Modal.confirm({
+      title: '添加分类',
+      content: (<Input onChange={this.handleChangeInput} placeholder="输入分类名称" />),
+      okText: '保存',
+      cancelText: '取消',
+      onOk: () => {
+        if (this.state.categoryName) {
+          this.props.categoryAction.fetchEdit({
+            name: this.state.categoryName
+          });
+        }
+      }
+    });
   }
   handleDeleteCategory(id) {
     Modal.confirm({
@@ -78,34 +82,9 @@ class CategoryList extends React.Component {
     this.props.categoryAction.fetchEdit({ name: categoryName }, categoryId);
   }
   handleCategorySubmit(data) {
-    this.props.categoryAction.fetchEdit(data);
+
   }
-  renderElement(record) {
-    let visable = this.state.categoryId === record.id;
-    return (
-      <div className="card-item-header">
-        <div
-          className="card-item-header-left"
-          style={{display: visable ? 'none' : 'block'}}>
-          {record.name}
-          <Icon type="edit" onClick={() => { this.handleOpenEditClick(record)}}/>
-         </div>
-        <div
-          className="card-item-header-left"
-          style={{display: visable ? 'block' : 'none'}}>
-          <Input value={this.state.categoryName} onChange={this.handleChangeInput}/>
-          <span
-            onClick={this.handleSaveEditClick}>
-            <Icon type="check-circle" />
-          </span>
-          <span onClick={this.handleCloseEditClick}><Icon type="close-circle" /></span>
-        </div>
-        <div className="card-item-header-right" onClick={() => { this.handleDeleteCategory(record.id)}}>
-          <Icon type="close-square" />
-        </div>
-      </div>
-    )
-  }
+
   handleDeleteTag(id) {
     this.props.tagAction.fetchRemove(id);
   }
@@ -137,15 +116,14 @@ class CategoryList extends React.Component {
         },
     });
   }
-  renderTags(tags) {
-    return tags.map(n => (
-      <Popconfirm
-        key={n.id}
-        title="你确定要删除这个标签吗"
-        onConfirm={() => { this.handleDeleteTag(n.id)}}
-        okText="是" cancelText="否">
-        <Tag>{ n.name}</Tag>
-      </Popconfirm>
+  renderTags(list) {
+    return list.map(n => (
+      <div key={n.id} className="category-item">
+        <span>{ n.name }</span>
+        <span onClick={ () => { this.handleDeleteCategory(n.id) }}>
+          <Icon type="delete" />
+        </span>
+      </div>
     ));
   }
   render() {
@@ -153,51 +131,17 @@ class CategoryList extends React.Component {
     if (this.props.categoryList.completed) {
       category = this.props.categoryList.result.data;
     }
-    const tagParentId = this.state.tagParentId;
     return (
       <div className="common-pannel category-pannel">
         <div className="common-operate">
-          <Button onClick={() => {this.setState({ visible: true})}}>添加</Button>
-          <CategoryAdd
-            onCancel={() =>{ this.setState({ visible: false })}}
-            onSubmit={this.handleCategorySubmit.bind(this)}
-            visible={this.state.visible}/>
         </div>
-        <Row>
-          {
-            category.map((item) => (
-              <Col span="8" key={item.id}>
-                <Card title={this.renderElement(item)}>
-                  { this.renderTags(item.tags) }
-                  {
-                    tagParentId === item.id &&
-                    (
-                      <Input
-                        ref={`input_${item.id}`}
-                        type="text"
-                        size="small"
-                        style={{ width: 78 }}
-                        onBlur={this.handleSubmitTag}
-                        onPressEnter={this.handleSubmitTag}
-                      />
-                    )
-                  }
-                  {
-                    tagParentId !== item.id &&
-                    (
-                      <Button
-                        size="small"
-                        type="dashed"
-                        onClick={() => { this.showTagsAddInput(item.id) }}>
-                        + 添加
-                        </Button>
-                    )
-                  }
-                </Card>
-              </Col>
-            ))
-          }
-          </Row>
+        <div className="category-box">
+          { this.renderTags(category) }
+          <div className="category-item">
+            <span><Icon type="plus-circle" /></span>
+            <span onClick={this.handleClickAdd}>添加</span>
+          </div>
+        </div>
       </div>
     );
   }
@@ -208,14 +152,11 @@ export default connect(
       categoryList: state.category.list,
       categoryEdit: state.category.edit,
       categoryRemove: state.category.remove,
-      tagEdit: state.tag.edit,
-      tagRemove: state.tag.remove,
     };
   },
   (dispatch) => {
     return {
       categoryAction: bindActionCreators(categoryAction, dispatch),
-      tagAction: bindActionCreators(tagAction, dispatch)
     };
   }
 )(CategoryList)
