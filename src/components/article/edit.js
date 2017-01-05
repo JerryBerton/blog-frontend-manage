@@ -1,17 +1,17 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import MarkdownEdit from '../resource/index.js';
+import SimpleMDE from 'react-simplemde-editor';
+
 import * as articlelAction from '../../actions/article';
 import * as categoryAction from '../../actions/category';
+import { Button, Form, message, Input, Upload, Icon, Select, Radio } from 'antd';
 
-import SimpleMDE from 'react-simplemde-editor';
-import { Button, Form, message, Input, Upload, Icon, Modal, Select, Radio} from 'antd';
-import Base64 from 'js-base64';
 class CategoryAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      optLabel: true,
       fileList: [],
       editValue: null
     }
@@ -20,40 +20,30 @@ class CategoryAdd extends React.Component {
     this.handleUploadChange = this.handleUploadChange.bind(this);
   }
   componentWillMount() {
-    const { location } = this.props;
-    this.props.categoryAction.fetchList({isPage: 1});
-    if (location.query.type === 'mod') {
-      let id = location.query.id;
-      this.props.articlelAction.fetchDetail(id);
+    const { params } = this.props;
+    this.props.categoryAction.fetchList();
+    if (params.hasOwnProperty('id')) {
+      this.state.optLabel = false;
+      this.props.articlelAction.fetchDetail(params.id);
     }
   }
-  componentDidMount() {
-
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { location } = this.props;
+    const { params } = this.props;
     if (nextProps.articleEdit.completed &&
       JSON.stringify(this.props.articleEdit) !== JSON.stringify(nextProps.articleEdit)) {
-        message.success("轮播添加成功, 2秒后页面跳转", 2);
+        message.success('轮播添加成功, 2秒后页面跳转', 2);
         setTimeout(() => {
           this.context.router.push('manage/article/list');
         }, 2000);
       }
-    // 如果 type = mod 代表是编辑
-    if (location.query.type === 'mod' && nextProps.articleDetail.completed &&
+    // 如果 params id 存在时 代表是编辑
+    if (params.hasOwnProperty('id') && nextProps.articleDetail.completed &&
       JSON.stringify(this.props.articleDetail) !== JSON.stringify(nextProps.articleDetail)) {
-        let detail = {...nextProps.articleDetail.result};
+        let detail = {...nextProps.articleDetail.result };
         detail.categoryId = detail.categoryId && detail.categoryId.toString();
         this.state.editValue = detail.content;
         this.props.form.setFieldsValue(detail);
     }
-
-    // if (location.query.type === 'new')  {
-    //   console.log(12321);
-    //   this.props.form.resetFields();
-    //   this.state.editValue = null;
-    // }
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -61,7 +51,7 @@ class CategoryAdd extends React.Component {
      if (!err) {
        this.props.articlelAction.fetchEdit({
          ...fieldsValue,
-         content: this.state.editValue,
+         content: this.state.editValue
        });
      }
     });
@@ -70,9 +60,9 @@ class CategoryAdd extends React.Component {
     this.setState({ editValue: value});
   }
   // 文件上传后的钩子
-  handleUploadChange({ file, fileList }) {
-    const list = fileList.map((item, index) => {
-      return {...item, name: item.response}
+  handleUploadChange({fileList }) {
+    const list = fileList.map(item => {
+      return {...item, name: item.response }
     })
     this.setState({
       fileList: list
@@ -83,14 +73,17 @@ class CategoryAdd extends React.Component {
     const fileList = this.state.fileList;
     const formItemLayout = {
       labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      wrapperCol: { span: 14 }
     };
     let category = [];
     if (this.props.categoryList.completed) {
-      category = this.props.categoryList.result.data;
+      category = this.props.categoryList.result;
     }
     return(
       <div className="common-pannel" >
+        <div className="common-operate"
+          title={this.state.optLabel ? '添加文章' : '修改文章'}>
+        </div>
         <Form horizontal onSubmit={this.handleSubmit}>
           <Form.Item
             {...formItemLayout}
@@ -98,8 +91,8 @@ class CategoryAdd extends React.Component {
             hasFeedback>
             {getFieldDecorator('title', {
               rules: [{
-                required: true, message: '文章标题必须传',
-              }],
+                required: true, message: '文章标题必须传'
+              }]
             })(
               <Input />
             )}
@@ -110,8 +103,8 @@ class CategoryAdd extends React.Component {
             hasFeedback>
             {getFieldDecorator('categoryId', {
               rules: [{
-                required: true, message: '必须选择文章分类',
-              }],
+                required: true, message: '必须选择文章分类'
+              }]
             })(
               <Select placeholder="请选择一个分类">
                 {
@@ -142,8 +135,8 @@ class CategoryAdd extends React.Component {
             hasFeedback>
             {getFieldDecorator('description', {
               rules: [{
-                required: true, message: '信息描述必须填写',
-              }],
+                required: true, message: '信息描述必须填写'
+              }]
             })(
               <Input type="textarea"/>
             )}

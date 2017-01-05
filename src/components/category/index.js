@@ -16,11 +16,7 @@ class CategoryList extends React.Component {
       categoryName: null,
       visible: false
     };
-    // this.handleCloseEditClick = this.handleCloseEditClick.bind(this);
-    // this.handleSaveEditClick = this.handleSaveEditClick.bind(this);
-    // this.handleCloseEditClick = this.handleCloseEditClick.bind(this);
-     this.handleChangeInput = this.handleChangeInput.bind(this);
-    // this.handleSubmitTag = this.handleSubmitTag.bind(this);
+    this.handleChangeInput = this.handleChangeInput.bind(this);
     this.handleClickAdd = this.handleClickAdd.bind(this);
   }
   componentWillMount() {
@@ -81,10 +77,6 @@ class CategoryList extends React.Component {
     const { categoryName, categoryId} = this.state;
     this.props.categoryAction.fetchEdit({ name: categoryName }, categoryId);
   }
-  handleCategorySubmit(data) {
-
-  }
-
   handleDeleteTag(id) {
     this.props.tagAction.fetchRemove(id);
   }
@@ -129,11 +121,11 @@ class CategoryList extends React.Component {
   render() {
     let category = [];
     if (this.props.categoryList.completed) {
-      category = this.props.categoryList.result.data;
+      category = this.props.categoryList.result;
     }
     return (
       <div className="common-pannel category-pannel">
-        <div className="common-operate">
+        <div className="common-operate" title="分类管理">
         </div>
         <div className="category-box">
           { this.renderTags(category) }

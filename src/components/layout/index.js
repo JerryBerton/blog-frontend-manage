@@ -78,7 +78,7 @@ class LayoutComponent extends React.Component {
               <Menu.SubMenu
                 title={<span><Icon type="mail" />文章管理</span>}>
                 <Menu.Item key="manage/article/list">文章列表</Menu.Item>
-                <Menu.Item key="manage/article/edit?type=new">编辑文章</Menu.Item>
+                <Menu.Item key="manage/article/new">添加文章</Menu.Item>
               </Menu.SubMenu>
               <Menu.Item key="manage/category">
                 <Icon type="mail" />

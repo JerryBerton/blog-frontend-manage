@@ -61,7 +61,7 @@ class ArticleList extends React.Component {
         render(record) {
           return (
             <div>
-              <Link to={`/manage/article/edit?type=mod&id=${record.id}`} className="common-action ">编辑</Link>
+              <Link to={`/manage/article/modify/${record.id}`} className="common-action ">编辑</Link>
               <Link className="common-action ">删除</Link>
             </div>
           )
@@ -76,6 +76,7 @@ class ArticleList extends React.Component {
     }
     return (
       <div className="common-pannel">
+        <div className="common-operate" title="文章列表"></div>
         <Table
           dataSource={article.data}
           columns={this.configColumns()}

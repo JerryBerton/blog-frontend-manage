@@ -7,7 +7,7 @@ import App from './components/home/';
 import Layout from './components/layout/';
 import Carousel from './components/carousel/';
 import ArticleList from './components/article/';
-import ArticleAdd from './components/article/add';
+import ArticleEdit from './components/article/edit';
 import CategoryList from './components/category/';
 import ReptileList from './components/reptile/';
 import ReptileCapture from './components/reptile/capture';
@@ -30,8 +30,9 @@ const routes = (
       <Route path="reptile" component={ReptileList}/>
       <Route path="reptile/capture/:id" component={ReptileCapture}/>
       <Route path="article">
+        <Route path="new" component={ArticleEdit}/>
+        <Route path="modify/:id" component={ArticleEdit}/>
         <Route path="list" component={ArticleList}/>
-        <Route path="edit" component={ArticleAdd}/>
       </Route>
       <Route path="category" component={CategoryList}/>
     </Route>
