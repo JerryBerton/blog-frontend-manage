@@ -43,6 +43,9 @@ class CategoryAdd extends React.Component {
         detail.categoryId = detail.categoryId && detail.categoryId.toString();
         this.state.editValue = detail.content;
         this.props.form.setFieldsValue(detail);
+    } else {
+      this.state.editValue = null;
+      this.props.form.resetFields();
     }
   }
   handleSubmit(e) {
@@ -156,7 +159,7 @@ class CategoryAdd extends React.Component {
             label="描述信息"
             hasFeedback>
            <SimpleMDE
-
+             value={this.state.editValue}
              onChange={this.handleEditChange}
            />
           </Form.Item>
